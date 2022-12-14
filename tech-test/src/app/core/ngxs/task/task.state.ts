@@ -5,6 +5,7 @@ import { Action, State, StateContext } from '@ngxs/store';
 import { createRequestAction, RequestState } from 'ngxs-requests-plugin';
 
 import {
+  EditTask, EditTaskSuccess,
   GetTask, GetTaskFail,
   GetTasks,
   GetTasksFail,
@@ -28,6 +29,11 @@ export class GetTasksRequestState {
 @Injectable()
 @RequestState('getTask')
 export class GetTaskRequestState {
+}
+
+@Injectable()
+@RequestState('editTask')
+export class EditTaskRequestState {
 }
 
 @State<TaskStateModel>({
@@ -107,6 +113,25 @@ export class TaskState {
 
   @Action(GetTaskSuccess)
   getTaskSuccess({ dispatch }: StateContext<TaskStateModel>, { payload }: GetTaskSuccess) {
+    return dispatch(new SetTask(payload));
+  }
+
+  @Action(EditTask)
+  editTask({ dispatch }: StateContext<TaskStateModel>, { payload }: EditTask) {
+    const request = this.httpClient.patch(`${environment.apiUrl}/tasks/${payload.id}`, payload.task);
+
+    return dispatch(
+      createRequestAction({
+        state: EditTaskRequestState,
+        request,
+        successAction: GetTaskSuccess,
+        failAction: GetTaskFail,
+      }),
+    );
+  }
+
+  @Action(EditTaskSuccess)
+  editTaskSuccess({ dispatch }: StateContext<TaskStateModel>, { payload }: EditTaskSuccess) {
     return dispatch(new SetTask(payload));
   }
 }

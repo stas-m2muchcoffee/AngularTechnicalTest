@@ -5,7 +5,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsRequestsPluginModule } from 'ngxs-requests-plugin';
 
 import { environment } from '../../../environments/environment';
-import { GetTaskRequestState, GetTasksRequestState, TaskState } from './task/task.state';
+import { EditTaskRequestState, GetTaskRequestState, GetTasksRequestState, TaskState } from './task/task.state';
 
 
 @NgModule({
@@ -24,6 +24,7 @@ import { GetTaskRequestState, GetTasksRequestState, TaskState } from './task/tas
     NgxsRequestsPluginModule.forRoot([
       GetTasksRequestState,
       GetTaskRequestState,
+      EditTaskRequestState,
     ]),
   ],
 })

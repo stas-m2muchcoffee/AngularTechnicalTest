@@ -37,6 +37,7 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.taskForm = new FormGroup({
+      id: new FormControl(null),
       label: new FormControl(null),
       description: new FormControl(null),
       category: new FormControl(null),
@@ -48,5 +49,10 @@ export class TaskDetailsComponent implements OnInit {
     ).subscribe((task) => {
       this.taskForm.patchValue(task);
     });
+  }
+
+  editTask() {
+    const { id, ...task } = this.taskForm.value;
+    this.taskService.editTask(id, task);
   }
 }

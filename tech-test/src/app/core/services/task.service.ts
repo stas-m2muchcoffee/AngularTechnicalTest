@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 import { TaskGetterState } from '../ngxs/task/task-getter.state';
 import { GetTaskRequestState, GetTasksRequestState } from '../ngxs/task/task.state';
-import { GetTask, GetTasks } from '../ngxs/task/task.actions';
+import { EditTask, GetTask, GetTasks } from '../ngxs/task/task.actions';
 import { Task } from '../models/task.interface';
 
 
@@ -35,5 +35,12 @@ export class TaskService {
 
   getTask(taskId: string) {
     this.store.dispatch(new GetTask(taskId));
+  }
+
+  editTask(id: string, task) {
+    this.store.dispatch(new EditTask({
+      id,
+      task,
+    }));
   }
 }

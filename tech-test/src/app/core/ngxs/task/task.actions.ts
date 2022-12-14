@@ -12,6 +12,10 @@ const ActionTypes = {
   GET_TASK: '[Task] Get Task',
   GET_TASK_SUCCESS: '[Task] Get Task Success',
   GET_TASK_FAIL: '[Task] Get Task Fail',
+
+  EDIT_TASK: '[Task] Edit Task',
+  EDIT_TASK_SUCCESS: '[Task] Edit Task Success',
+  EDIT_TASK_FAIL: '[Task] Edit Task Fail',
 };
 
 export class SetTasks {
@@ -61,6 +65,30 @@ export class GetTaskSuccess {
 }
 
 export class GetTaskFail {
+  static type = ActionTypes.GET_TASK_FAIL;
+
+  constructor(public payload: HttpErrorResponse) {
+  }
+}
+
+export class EditTask {
+  static type = ActionTypes.GET_TASK;
+
+  constructor(public payload: {
+    id: string,
+    task: Task,
+  }) {
+  }
+}
+
+export class EditTaskSuccess {
+  static type = ActionTypes.GET_TASK_SUCCESS;
+
+  constructor(public payload: Task) {
+  }
+}
+
+export class EditTaskFail {
   static type = ActionTypes.GET_TASK_FAIL;
 
   constructor(public payload: HttpErrorResponse) {
