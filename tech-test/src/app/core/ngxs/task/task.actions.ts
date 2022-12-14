@@ -72,7 +72,7 @@ export class GetTaskFail {
 }
 
 export class EditTask {
-  static type = ActionTypes.GET_TASK;
+  static type = ActionTypes.EDIT_TASK;
 
   constructor(public payload: {
     id: string,
@@ -82,14 +82,14 @@ export class EditTask {
 }
 
 export class EditTaskSuccess {
-  static type = ActionTypes.GET_TASK_SUCCESS;
+  static type = ActionTypes.EDIT_TASK_SUCCESS;
 
   constructor(public payload: Task) {
   }
 }
 
 export class EditTaskFail {
-  static type = ActionTypes.GET_TASK_FAIL;
+  static type = ActionTypes.EDIT_TASK_FAIL;
 
   constructor(public payload: HttpErrorResponse) {
   }
