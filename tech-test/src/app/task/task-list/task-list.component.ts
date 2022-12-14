@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { map } from 'rxjs/operators';
+
+import { TaskService } from '../../core/services/task.service';
 
 @Component({
   selector: 'app-task-list',
@@ -7,9 +12,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskListComponent implements OnInit {
 
-  constructor() { }
+  public tasksTableDataSource$ = this.taskService.tasks$.pipe(
+    map(tasks => new MatTableDataSource(tasks)),
+  );
+
+  displayedColumns = ['id', 'label', 'category', 'done', 'actions'];
+
+  constructor(
+    private taskService: TaskService,
+  ) {
+  }
 
   ngOnInit(): void {
   }
-
 }
