@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { map } from 'rxjs/operators';
 
@@ -10,7 +11,7 @@ import { TaskService } from '../../core/services/task.service';
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent {
 
   public tasksTableDataSource$ = this.taskService.tasks$.pipe(
     map(tasks => new MatTableDataSource(tasks)),
@@ -20,9 +21,14 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
   }
 
-  ngOnInit(): void {
+  goToTaskDetails(taskId) {
+    this.router.navigate([taskId], {
+      relativeTo: this.route
+    });
   }
 }
