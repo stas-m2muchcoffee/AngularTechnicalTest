@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { NgxsStoreModule } from './ngxs/ngxs-store.module';
+import { TaskService } from './services/task.service';
 
 @NgModule({
   imports: [
@@ -10,6 +11,9 @@ import { NgxsStoreModule } from './ngxs/ngxs-store.module';
     BrowserModule,
     NgxsStoreModule,
   ],
+  providers: [
+    TaskService,
+  ]
 })
 export class CoreModule {
 }
