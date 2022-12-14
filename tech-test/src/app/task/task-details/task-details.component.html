@@ -1,1 +1,25 @@
-<p>task-details works!</p>
+<div class="task-details-page">
+  <form class="task-form" [formGroup]="taskForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Label</mat-label>
+      <input matInput type="text" [formControl]="labelControl" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <input matInput type="text" [formControl]="descriptionControl" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <input matInput type="text" [formControl]="categoryControl" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Done</mat-label>
+      <input matInput type="text" [formControl]="doneControl" />
+    </mat-form-field>
+
+    <button mat-raised-button>Save</button>
+  </form>
+</div>
