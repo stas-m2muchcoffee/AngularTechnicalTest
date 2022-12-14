@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgxsStoreModule } from './ngxs/ngxs-store.module';
 import { TaskService } from './services/task.service';
@@ -9,6 +10,7 @@ import { TaskService } from './services/task.service';
   imports: [
     HttpClientModule,
     BrowserModule,
+    BrowserAnimationsModule,
     NgxsStoreModule,
   ],
   providers: [
