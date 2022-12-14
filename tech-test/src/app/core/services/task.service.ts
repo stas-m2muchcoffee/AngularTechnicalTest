@@ -5,8 +5,8 @@ import { IRequest } from 'ngxs-requests-plugin';
 import { Observable } from 'rxjs';
 
 import { TaskGetterState } from '../ngxs/task/task-getter.state';
-import { GetTasksRequestState } from '../ngxs/task/task.state';
-import { GetTasks } from '../ngxs/task/task.actions';
+import { GetTaskRequestState, GetTasksRequestState } from '../ngxs/task/task.state';
+import { GetTask, GetTasks } from '../ngxs/task/task.actions';
 import { Task } from '../models/task.interface';
 
 
@@ -18,12 +18,22 @@ export class TaskService {
   @Select(TaskGetterState.getTasks)
   tasks$: Observable<Task[]>;
 
+  @Select(TaskGetterState.getCurrentTask)
+  currentTask$: Observable<Task>;
+
   @Select(GetTasksRequestState)
   getTasksRequestState$: Observable<IRequest>;
+
+  @Select(GetTaskRequestState)
+  getTaskRequestState$: Observable<IRequest>;
 
   constructor(private store: Store) {}
 
   getTasks() {
     this.store.dispatch(new GetTasks());
+  }
+
+  getTask(taskId: string) {
+    this.store.dispatch(new GetTask(taskId));
   }
 }

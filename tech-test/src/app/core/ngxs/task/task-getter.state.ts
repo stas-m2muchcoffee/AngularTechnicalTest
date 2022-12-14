@@ -7,4 +7,9 @@ export class TaskGetterState {
   static getTasks(state: TaskStateModel) {
     return state.ids.map((id) => state.entities[id]);
   }
+
+  @Selector([TaskState])
+  static getCurrentTask(state: TaskStateModel) {
+    return state.entities[state.currentTaskId];
+  }
 }

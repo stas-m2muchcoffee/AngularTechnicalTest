@@ -5,9 +5,10 @@ import { Action, State, StateContext } from '@ngxs/store';
 import { createRequestAction, RequestState } from 'ngxs-requests-plugin';
 
 import {
+  GetTask, GetTaskFail,
   GetTasks,
   GetTasksFail,
-  GetTasksSuccess,
+  GetTasksSuccess, GetTaskSuccess, SetTask,
   SetTasks,
 } from './task.actions';
 import { Task } from '../../models/task.interface';
@@ -22,6 +23,11 @@ export interface TaskStateModel {
 @Injectable()
 @RequestState('getTasks')
 export class GetTasksRequestState {
+}
+
+@Injectable()
+@RequestState('getTask')
+export class GetTaskRequestState {
 }
 
 @State<TaskStateModel>({
@@ -52,6 +58,20 @@ export class TaskState {
     });
   }
 
+  @Action(SetTask)
+  setTask({ getState, patchState }: StateContext<TaskStateModel>, { payload }: SetTask) {
+    const { entities, ids } = getState();
+
+    return patchState({
+      entities: {
+        ...entities,
+        [payload.id]: payload,
+      },
+      ids: [...new Set([...ids, payload.id])],
+      currentTaskId: payload.id,
+    });
+  }
+
   @Action(GetTasks)
   getTasks({ dispatch }: StateContext<TaskStateModel>) {
     const request = this.httpClient.get(`${environment.apiUrl}/tasks`);
@@ -69,5 +89,24 @@ export class TaskState {
   @Action(GetTasksSuccess)
   getTasksSuccess({ dispatch }: StateContext<TaskStateModel>, { payload }: GetTasksSuccess) {
     return dispatch(new SetTasks(payload));
+  }
+
+  @Action(GetTask)
+  getTask({ dispatch }: StateContext<TaskStateModel>, { payload }: GetTask) {
+    const request = this.httpClient.get(`${environment.apiUrl}/tasks/${payload}`);
+
+    return dispatch(
+      createRequestAction({
+        state: GetTaskRequestState,
+        request,
+        successAction: GetTaskSuccess,
+        failAction: GetTaskFail,
+      }),
+    );
+  }
+
+  @Action(GetTaskSuccess)
+  getTaskSuccess({ dispatch }: StateContext<TaskStateModel>, { payload }: GetTaskSuccess) {
+    return dispatch(new SetTask(payload));
   }
 }
